@@ -24,8 +24,8 @@ export const DevicePage = () => {
             src={
               "https://www.mickeynews.com/wp-content/uploads/2016/08/Goofystar_1600-1280x640.jpg"
             }
-            width={600}
-            height={200}
+            width={1000}
+            height={400}
             style={{ borderRadius: "10px" }}
           />
         </Box>

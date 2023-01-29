@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Layout = ({ children }) => {
   return (
@@ -22,7 +23,7 @@ const Layout = ({ children }) => {
             <Typography>list a device</Typography>
           </Link>
         </Box>
-        <Button>connect wallet</Button>
+        <ConnectButton label="Sign in" />
       </Box>
       <Box mt={5}>{children}</Box>
     </Box>

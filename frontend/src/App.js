@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import { DevicePage } from "./pages/DevicePage";
-import Home from "./pages/Home";
 import ListDevice from "./pages/ListDevice";
 import ListDeviceForm from "./pages/ListDeviceForm";
 import RentDevice from "./pages/RentDevice";
@@ -12,32 +11,40 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import deployedIofyContract from "./artifacts/iofy/iofy.json";
+import deployedMockTokenContract from "./artifacts/moktoken/moktoken.json";
+
+export const iofyContractAddress = "0xc150c9Cf5e6CBC9Ec4F28b2Dbf750c04288bAC0d";
+export const mockTokenContractAdress =
+  "0x8AD10a05189cAC762Fc74b7b3F3eFFb1BEFb8FA9";
+export const iofyContractAbi = deployedIofyContract;
+export const mockTokenContractAbi = deployedMockTokenContract;
 
 const HyperspaceChain = {
   id: 3141,
-  name: 'Filecoin Hyperspace',
-  network: 'Filecoin Hyperspace',
-  iconUrl: 'https://example.com/icon.svg',
-  iconBackground: '#fff',
+  name: "Filecoin Hyperspace",
+  network: "Filecoin Hyperspace",
+  iconUrl: "https://example.com/icon.svg",
+  iconBackground: "#fff",
   nativeCurrency: {
     decimals: 18,
-    name: 'FileCoin',
-    symbol: 'IFIL',
+    name: "FileCoin",
+    symbol: "IFIL",
   },
   rpcUrls: {
     default: {
-      http: ['https://api.hyperspace.node.glif.io/rpc/v1'],
+      http: ["https://api.hyperspace.node.glif.io/rpc/v1"],
     },
   },
   blockExplorers: {
-    default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
-    etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+    default: { name: "SnowTrace", url: "https://snowtrace.io" },
+    etherscan: { name: "SnowTrace", url: "https://snowtrace.io" },
   },
   testnet: false,
 };
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum,HyperspaceChain],
+  [mainnet, polygon, optimism, arbitrum, HyperspaceChain],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
 

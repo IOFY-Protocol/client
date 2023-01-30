@@ -11,10 +11,10 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import deployedIofyContract from "./artifacts/iofy/iofy.json";
-import deployedMockTokenContract from "./artifacts/moktoken/moktoken.json";
+import deployedIofyContract from "./artifacts/Iofy.sol/Iofy.json";
+import deployedMockTokenContract from "./artifacts/test/MockToken.sol/MockToken.json";
 
-export const iofyContractAddress = "0xc150c9Cf5e6CBC9Ec4F28b2Dbf750c04288bAC0d";
+export const iofyContractAddress = "0x954630ac0260B7BE506bD3D42517Ce7c21DDdb29";
 export const mockTokenContractAdress =
   "0x8AD10a05189cAC762Fc74b7b3F3eFFb1BEFb8FA9";
 export const iofyContractAbi = deployedIofyContract;

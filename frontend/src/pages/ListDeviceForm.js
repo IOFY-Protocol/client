@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
-import { Box, Button, Typography, Grid } from "@mui/material";
-import { ReactComponent as ArrowIcon } from "../assets/Arrow.svg";
-import { useNavigate } from "react-router-dom";
-import Input from "../components/ui";
-import { ethers, BigNumber } from "ethers";
-import { iofyContractAddress, iofyContractAbi } from "../App";
+import AddIcon from '@mui/icons-material/Add';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import {Box, Button, Typography} from "@mui/material";
 import axios from 'axios';
-
+import {BigNumber, ethers} from "ethers";
+import React, {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {iofyContractAbi, iofyContractAddress} from "../App";
+import {ReactComponent as ArrowIcon} from "../assets/Arrow.svg";
+import "./ListDeviceForm.css";
 
 const ListDeviceForm = () => {
   const [fee, setFee] = React.useState("");
@@ -16,17 +17,17 @@ const ListDeviceForm = () => {
     rentalFee: "",
     description: "",
     imgCid: ""
-  })
+  });
   const createIotDevice = async () => {
-    const getId = await axios.get("http://localhost:8000/ID")
-    const id = (getId?.data).toString()
-    console.log("get id", id)
-    const objMeta = { ...metadata, id }
-    console.log("meta =", objMeta)
+    const getId = await axios.get("http://localhost:8000/ID");
+    const id = (getId?.data).toString();
+    console.log("get id", id);
+    const objMeta = {...metadata, id};
+    console.log("meta =", objMeta);
     const response = await axios.post('http://localhost:8000/createDataBase', objMeta);
-    console.log("post response =", response)
+    console.log("post response =", response);
     //const cid = "zdpuAnvUDYnohUe6SenG5dLaQp99h7yuFdT9nHVwguxUVtJWJ/7889"
-    const {root, path} = response.data.result ||{}
+    const {root, path} = response.data.result || {};
     const cid = root + "/" + path
     console.log("cid", cid)
     await addIotDevice(cid,Number(id),Number(objMeta.rentalFee))
@@ -145,41 +146,83 @@ const ListDeviceForm = () => {
 
   const navigate = useNavigate();
   return (
-    <Box>
-      <Box onClick={() => navigate("/list")} p={4}>
-        <ArrowIcon style={{ cursor: "pointer" }} />
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <Typography>List your Device for Rent</Typography>
-      </Box>
-      <Box
-        mt={2}
-        display="flex"
-        alignItems="center"
-        flexDirection="column"
-        gap="20px"
-      >
-        <Input type="text" label="Adress" width={500} />
-        <Input type="text" label="Category" width={500} onChange={(e) => setMetadata({ ...metadata, category: e.target.value })} />
-        <Input type="text" label="Device Name" width={500} onChange={(e) => setMetadata({ ...metadata, deviceName: e.target.value })} />
-        <Input type="text" label="Rental fee (per Hour)" width={500} onChange={(e) => setMetadata({ ...metadata, rentalFee: e.target.value })} />
-        <Input type="area" label="Describe your device" width={500} rows={4} onChange={(e) => setMetadata({ ...metadata, description: e.target.value })} />
-        <Input type="file" label="Image of device" />
-
-        <Button
-          style={{
-            backgroundColor: "#2A1053",
-            border: "1px solid #FFFFFF",
-            color: "white",
-            borderRadius: "10px",
-            padding: "10px 30px",
-          }}
-          onClick={() => createIotDevice()}
+      <Box>
+        <Box onClick={() => navigate("/list")} p={4}>
+          <ArrowIcon style={{cursor: "pointer"}}/>
+        </Box>
+        <Box display="flex" justifyContent="center">
+          <Typography className="title-List-Device">List your Device for Rent</Typography>
+        </Box>
+        <Box
+            mt={2}
+            mx={2}
+            display="flex"
+            flexDirection="column"
+            gap="20px"
         >
-          List your device
-        </Button>
+          <div className="input-List-Device-container">
+            <div className="label-input-List-Device-container">
+              <span className="label-input-List-Device">Address</span>
+            </div>
+
+            <input placeholder="example: 0xd0ba04c6231a15202e69beAA87C867b20DF8693C" className="input-List-Devices"
+                   type="text"/>
+
+          </div>
+          <div className="input-List-Device-container">
+            <div className="label-input-List-Device-container">
+              <span className="label-input-List-Device">Category</span>
+            </div>
+            <input placeholder="Select a category" className="input-List-Devices" type="text"
+                   onChange={(e) => setMetadata({...metadata, category: e.target.value})}/>
+          </div>
+          <div className="input-List-Device-container">
+            <div className="label-input-List-Device-container">
+              <span className="label-input-List-Device">Device Name</span>
+            </div>
+            <input placeholder="Set your device name" className="input-List-Devices" type="text"
+                   onChange={(e) => setMetadata({...metadata, deviceName: e.target.value})}/>
+          </div>
+          <div className="input-List-Device-container">
+            <div className="label-input-List-Device-container">
+              <span className="label-input-List-Device">Rental fee (per Hour)</span>
+            </div>
+            <input placeholder="$ per hour" className="input-List-Devices" type="text"
+                   onChange={(e) => setMetadata({...metadata, rentalFee: e.target.value})}/>
+          </div>
+          <div className="input-List-Device-container">
+            <div className="label-input-List-Device-container">
+              <span className="label-input-List-Device">Describe your device</span>
+            </div>
+            <input placeholder="Tell us more about this device" className="input-List-Devices" type="area"
+                   onChange={(e) => setMetadata({...metadata, description: e.target.value})}/>
+          </div>
+          <div className="input-List-Device-container">
+            <div className="label-input-List-Device-container">
+              <span className="label-input-List-Device">Image of device</span>
+            </div>
+            <div className="image-input-List-Devices">
+              <label htmlFor="inputTag">
+                <UploadFileIcon/>
+              </label>
+              <input id="inputTag" className="file-input-List-Devices" type="file"/>
+            </div>
+          </div>
+        </Box>
+        <Box
+            mt={2}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap="20px"
+        >
+          <Button className="btn-List-Device" variant="contained" startIcon={<AddIcon/>}
+                  onClick={() => createIotDevice()}>
+            <span className="text-List-Device">List Device</span>
+          </Button>
+        </Box>
+
       </Box>
-    </Box>
   );
 };
 

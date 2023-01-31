@@ -1,31 +1,34 @@
+import {Box} from "@mui/material";
+import {ConnectButton} from "@rainbow-me/rainbowkit";
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import {NavLink} from "react-router-dom";
+import "./layout.css";
 
-const Layout = ({ children }) => {
-  return (
-    <Box mx={8}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        height="50px"
-      >
-        <Typography>IOFY</Typography>
-        <Box display="flex" alignItems="center">
-          <Link to={"/rent"}>
-            <Typography style={{ marginRight: "20px" }}>
+const Layout = ({children}) => {
+    return (
+        <Box mx={8}>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                height="50px"
+            >
+                <p className="project-title">IOFY</p>
+                <Box display="flex" alignItems="center">
+                    <NavLink className="link-layout" to={"/rent"}>
+            <span style={{marginRight: "20px"}}>
               Rent a device
-            </Typography>
-          </Link>
-          <Link to={"/list"}>
-            <Typography>list a device</Typography>
-          </Link>
-        </Box>
-        <ConnectButton label="Sign in" />
-      </Box>
-      <Box mt={5}>{children}</Box>
+            </span>
+                    </NavLink>
+                    <NavLink className="link-layout" to={"/list"}>
+                        <span>list a device</span>
+                    </NavLink>
+                </Box>
+                <div className="wrapper-connect-btn-Layout">
+                    <ConnectButton label="+"/>
+                </div>
+            </Box>
+            <Box mt={5}>{children}</Box>
     </Box>
   );
 };

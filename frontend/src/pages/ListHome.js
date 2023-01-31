@@ -68,7 +68,7 @@ const listHome = () => {
 
   return (
     <Grid container style={{ display: "flex" }}>
-      <Grid item lg={6} pl={4}>
+      <Grid item lg={8} pl={12}>
         <Box display="flex" justifyContent="space-between">
           <Typography>My devices</Typography>
           <Typography>see all</Typography>
@@ -114,7 +114,7 @@ const listHome = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 py={2}
-                borderBottom="1px solid rgba(0, 0, 0, 0.9)"
+                borderBottom="1px rgba(0, 0, 0, 0.9)"
               >
                 <Box>
                   <Typography>{history?.day}</Typography>
@@ -129,7 +129,7 @@ const listHome = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid item lg={6}></Grid>
+
     </Grid>
   );
 };

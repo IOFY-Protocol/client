@@ -5,7 +5,7 @@ import { RentHome } from "./RentHome";
 const RentDevice = () => {
   return (
     <>
-      <Tabs tabName={["Home", "Setting"]} tabsContent={[<RentHome />, "w"]} />
+      <Tabs tabName={["Home"]} tabsContent={[<RentHome />, "w"]} />
     </>
   );
 };

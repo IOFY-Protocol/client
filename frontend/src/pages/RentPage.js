@@ -1,12 +1,147 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import { ReactComponent as ArrowIcon } from "../assets/Arrow.svg";
+import { ethers, BigNumber } from "ethers";
+import axios from 'axios';
+import { iofyContractAddress, mockTokenContractAdress, mockTokenContractAbi, iofyContractAbi } from "../App";
+
 
 const RentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [data, setData] = useState();
+  const [userAddress, setUserAddress] = useState();
+
   const { name, distance, price, review, status } = location?.state?.row;
+  //zdpuB1RsEudVE45aHUNy84qsrEPGkCroFFrTmM1GThA8s9jFN/7549
+  const getData = async () => {
+    const metaData = await axios.get("http://localhost:8000/orbitdb/zdpuB1RsEudVE45aHUNy84qsrEPGkCroFFrTmM1GThA8s9jFN/7549")
+    const data = metaData?.data && metaData?.data[0]
+    setData(data)
+  }
+  console.log("data", data)
+  useEffect(() => {
+    getData();
+  }, []);
+
+  /**
+ * rent an Iot device
+ */
+  const rentIoTDevice = async (
+    iotDeviceId,
+    user,
+    amount,
+    startsIn
+  ) => {
+    if (!iotDeviceId && Number(iotDeviceId)) {
+      console.log(`Error, Please enter a valid iotDeviceId`);
+      return;
+    }
+
+    if (!amount && Number(amount)) {
+      console.log(`Error, Please enter a valid amount`);
+      return;
+    }
+
+    if (!startsIn && Number(startsIn)) {
+      console.log(`Error, Please enter a valid startsIn`);
+      return;
+    }
+
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+          iofyContractAddress,
+          iofyContractAbi.abi,
+          signer
+        );
+        const stableToken = new ethers.Contract(
+          mockTokenContractAdress,
+          mockTokenContractAbi.abi,
+          signer
+        );
+        /**
+         *  Receive Emitted Event from Smart Contract
+         *  @dev See newAttributeAdded emitted from our smart contract add_new_attribute function
+         */
+        contract.on("RentIot", async (receiver, user, iotDeviceId, id, costPerHour, fee, start, end) => {
+          console.log("Iot receiver address :", receiver.toString());
+          console.log("Iot owner address :", user.toString());
+          console.log("Iot iotDeviceId :", iotDeviceId.toNumber());
+          console.log("Iot costPerHour :", costPerHour.toNumber());
+          console.log("Iot start :", start.toNumber());
+          console.log("Iot end :", end.toNumber());
+          console.log("Iot start :", fee.toNumber());
+          const response = await axios.post('http://localhost:8000/unlockDevice');
+          console.log("post response =", response)
+        });
+        let appr = await stableToken.approve(iofyContractAddress, amount);
+        console.log("approve... please wait!");
+        await appr.wait();
+        let tx = await contract.rentIoT(
+          iotDeviceId,
+          user,
+          amount,
+          startsIn
+        );
+        const stylesMining = ["color: black", "background: yellow"].join(";");
+        console.log(
+          "%c Create new iot device... please wait!  %s",
+          stylesMining,
+          tx.hash
+        );
+        //wait until a block containing our transaction has been mined and confirmed.
+        //NewCampaignCreated event has been emitted .
+        const receipt = await tx.wait();
+        const stylesReceipt = ["color: black", "background: #e9429b"].join(";");
+        console.log(
+          "%c🍵 We just added new iot device %s ",
+          stylesReceipt,
+          tx.hash
+        );
+        /* Check our Transaction results */
+        if (receipt.status === 1) {
+          /**
+           * @dev NOTE: Switch up these links once we go to Production
+           * Currently set to use Polygon Mumbai Testnet
+           */
+          const stylesPolygon = ["color: white", "background: #7e44df"].join(
+            ";"
+          );
+          console.log(
+            `%c🧬 new iot device added, see transaction %s`,
+            stylesPolygon,
+            tx.hash
+          );
+        }
+        return;
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    const onNewSigner = async () => {
+      let addr;
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+
+        addr = await signer.getAddress();
+
+        setUserAddress(addr.toString());
+      }
+    };
+
+    onNewSigner();
+  }, [window.ethereum]);
 
   return (
     <Box>
@@ -38,7 +173,7 @@ const RentPage = () => {
           <Box display="flex" alignItems="center">
             <label style={{ marginRight: "20px" }}>Name </label>
 
-            <Typography>{name}</Typography>
+            <Typography>{data?.DeviceName || name}</Typography>
           </Box>
           <Box display="flex" alignItems="center">
             <label style={{ marginRight: "20px" }}>Owner </label>
@@ -57,13 +192,13 @@ const RentPage = () => {
           <Box display="flex" alignItems="center">
             <label style={{ marginRight: "20px" }}>Fee </label>
 
-            <Typography>{price}</Typography>
+            <Typography>{data?.RentalFee || price}</Typography>
           </Box>
 
           <Box display="flex" alignItems="center">
             <label style={{ marginRight: "20px" }}>Description </label>
 
-            <Typography>description</Typography>
+            <Typography>{data?.Description}</Typography>
           </Box>
         </Box>
       </Box>
@@ -77,7 +212,7 @@ const RentPage = () => {
             marginLeft: "10px",
             padding: "10px 25px",
           }}
-        >
+          onClick={() => rentIoTDevice(Number(data._id), userAddress, Number(data.RentalFee), 0)} >
           Rent
         </Button>
       </Box>

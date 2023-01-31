@@ -67,7 +67,7 @@ const ListDeviceForm = () => {
   }, []);
 
   /**
-  * Create a new Iot device for funding non-profit projects
+  * Create a new Iot device
   */
   const addIotDevice = async (
     cid,
@@ -111,7 +111,6 @@ const ListDeviceForm = () => {
           tx.hash
         );
         //wait until a block containing our transaction has been mined and confirmed.
-        //NewCampaignCreated event has been emitted .
         const receipt = await tx.wait();
         const stylesReceipt = ["color: black", "background: #e9429b"].join(";");
         console.log(

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import Table from "../components/Table";
 import { myHistory } from "./ListHome";
+import { ethers, BigNumber } from "ethers";
+import { iofyContractAddress, iofyContractAbi } from "../App";
 
 export const RentHome = () => {
   function createData(name, distance, price, review, status) {
@@ -16,6 +18,37 @@ export const RentHome = () => {
     createData("Henry Electric Scooter", 305, 3.7, 67, 4.3),
     createData("Mikay Electric Scooter", 356, 16.0, 49, 3.9),
   ];
+
+  const getIoTDevice = async (id) => {
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum, "any");
+        const contract = new ethers.Contract(
+          iofyContractAddress,
+          iofyContractAbi.abi,
+          provider
+        );
+
+        let iotDevice = await contract.getIoTDevice(id);
+        const stylesMining = ["color: black", "background: yellow"].join(";");
+        console.log(
+          "%c iot device =  %s",
+          stylesMining,
+          iotDevice
+        );
+        //setFee(fee);
+        return iotDevice;
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  useEffect(() => {
+    getIoTDevice(7549);
+  }, []);
   return (
     <Grid container style={{ display: "flex" }}>
       <Grid item lg={10} pl={4}>

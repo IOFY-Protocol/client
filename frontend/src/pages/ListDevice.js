@@ -5,7 +5,7 @@ import ListHome from "./ListHome";
 const ListDevice = () => {
   return (
     <>
-      <Tabs tabName={["Home", "Setting"]} tabsContent={[<ListHome />, "w"]} />
+      <Tabs tabName={["Home"]} tabsContent={[<ListHome />, "w"]} />
     </>
   );
 };

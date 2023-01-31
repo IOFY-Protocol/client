@@ -1,0 +1,113 @@
+.btn-List-Device {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 16px 8px !important;
+    gap: 8px !important;
+    width: 222px !important;
+    height: 62px !important;
+    background-color: #2A1053 !important;
+    border: 1px solid #FFFFFF !important;
+    border-radius: 10px !important;
+}
+.text-List-Device {
+    font-family: 'Inter', sans-serif !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    line-height: 18px !important;
+    text-align: center !important;
+    letter-spacing: -0.165px !important;
+    color: #FFFFFF !important;
+}
+.title-List-Device {
+    font-family: 'Poppins', sans-serif !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 22px !important;
+    line-height: 33px !important;
+    text-align: center !important;
+    letter-spacing: -0.165px !important;
+    color: #000000 !important;
+}
+.input-List-Device-container {
+    display: flex;
+    align-items: baseline;
+}
+.input-List-Devices {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 8px !important;
+    min-width: 550px !important;
+    height: 50px !important;
+    background: #FFFFFF !important;
+    border: 2px solid #D9D9D9 !important;
+    border-radius: 10px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    line-height: 18px !important;
+    letter-spacing: -0.165px !important;
+    color: #000000 !important;
+    opacity: 0.7 !important;
+    text-align: center !important;
+    margin-left: 5% !important;
+    width: 50%
+}
+.label-input-List-Device {
+    justify-self: end;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
+}
+.label-input-List-Device-container {
+    width: 20%;
+    display: flex;
+    justify-content: end;
+}
+.MuiBox-root css-1nwu0td {
+    display: flex;
+    justify-content: center;
+}
+.image-input-List-Devices {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 8px 16px !important;
+    gap: 10px !important;
+    min-width: 550px !important;
+    width: 50% !important;
+    height: 152px !important;
+    background: #FFFFFF !important;
+    border: 2px solid #D9D9D9 !important;
+    border-radius: 10px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    line-height: 18px !important;
+    letter-spacing: -0.165px !important;
+    color: #000000 !important;
+    opacity: 0.7 !important;
+    text-align: center !important;
+    margin-left: 5% !important;
+}
+.file-input-List-Devices {
+    display: none;
+}
+label {
+    cursor: pointer;
+}
+

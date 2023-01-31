@@ -1,19 +1,18 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
+import {Box, Grid} from "@mui/material";
 import Tab from "@mui/material/Tab";
-import { Box, Typography, Grid } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import Tabs from "@mui/material/Tabs";
+import PropTypes from "prop-types";
+import * as React from "react";
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const {children, value, index, ...other} = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      <div
+          role="tabpanel"
+          hidden={value !== index}
+          id={`simple-tabpanel-${index}`}
+          aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -49,7 +48,15 @@ export default function BasicTabs({ tabName, tabsContent }) {
           indicatorColor="secondary"
         >
           {tabName?.map((tab) => (
-            <Tab label={tab} key={tab} />
+              <Tab style={{
+                backgroundColor: "rgba(42, 16, 83, 0.94)",
+                color: '#ffffff',
+                fontSize: "22px",
+                fontWeight: "500",
+                fontFamily: "'Poppins', sans-serif;",
+                border: "1px solid #FFFFFF",
+                borderRadius: "10px",
+              }} label={tab} key={tab}/>
           ))}
         </Tabs>
       </Grid>

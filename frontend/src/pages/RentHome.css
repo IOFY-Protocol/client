@@ -1,0 +1,67 @@
+.near-Rent-Page {
+
+    height: 33px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 33px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.see-All-Near-Rent-Page {
+    height: 23px;
+    font-family: 'Poppins', sans-serif;;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration-line: underline;
+    color: rgba(0, 0, 0, 0.9);
+    opacity: 0.8;
+}
+
+.date-Rent-Page-History {
+    height: 15px;
+    font-family: "Inter", sans-serif ;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    letter-spacing: 0.004em;
+    color: rgba(0, 0, 0, 0.9);
+    opacity: 0.7;
+}
+
+.name-Rent-Page-History {
+    height: 19px;
+    font-family: "Inter", sans-serif ;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.status-Rent-Page-History {
+    height: 15px;
+    font-family: "Inter", sans-serif ;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 0.004em;
+    color: #840404;
+    opacity: 0.7;
+}
+.container-col-History-Rent-Home{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: start;
+}

@@ -6,7 +6,7 @@ import { ethers, BigNumber } from "ethers";
 import axios from 'axios';
 import { iofyContractAddress, mockTokenContractAdress, mockTokenContractAbi, iofyContractAbi } from "../App";
 
-
+import "./RentPage.css"
 const RentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -149,11 +149,12 @@ const RentPage = () => {
         <ArrowIcon style={{ cursor: "pointer" }} />
       </Box>
       <Box display="flex" justifyContent="center">
-        <Typography>{name}</Typography>
+        <span className="title-Device-Page">{name}</span>
       </Box>
       <Box mt={2}>
         <Box display="flex" justifyContent="center">
           <img
+              className="image-Rent-Page"
             src={
               "https://www.mickeynews.com/wp-content/uploads/2016/08/Goofystar_1600-1280x640.jpg"
             }
@@ -164,42 +165,40 @@ const RentPage = () => {
         </Box>
         <Box
           display="flex"
-          justifyContent="center"
-          alignItems="center"
           mt={4}
           flexDirection="column"
           gap="20px"
         >
-          <Box display="flex" alignItems="center">
-            <label style={{ marginRight: "20px" }}>Name </label>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Name </label>
 
-            <Typography>{data?.DeviceName || name}</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <label style={{ marginRight: "20px" }}>Owner </label>
-            <Typography>{name}</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <label style={{ marginRight: "20px" }}>Status </label>
+            <span className="text-value-Device-Page">{data?.DeviceName || name}</span>
+          </div>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Owner </label>
+            <span className="text-value-Device-Page">{name}</span>
+          </div>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Status </label>
 
-            <Typography>{status}</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <label style={{ marginRight: "20px" }}>Rating </label>
+            <span className="text-value-Device-Page">{status}</span>
+          </div>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Rating </label>
 
-            <Typography>{review}</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <label style={{ marginRight: "20px" }}>Fee </label>
+            <span className="text-value-Device-Page">{review}</span>
+          </div>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Fee </label>
 
-            <Typography>{data?.RentalFee || price}</Typography>
-          </Box>
+            <span className="text-value-Device-Page">{data?.RentalFee || price}</span>
+          </div>
 
-          <Box display="flex" alignItems="center">
-            <label style={{ marginRight: "20px" }}>Description </label>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Description </label>
 
-            <Typography>{data?.Description}</Typography>
-          </Box>
+            <span className="text-value-Device-Page">{data?.Description}</span>
+          </div>
         </Box>
       </Box>
       <Box display="flex" justifyContent="center" mt={8}>

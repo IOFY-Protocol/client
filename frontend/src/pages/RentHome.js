@@ -6,6 +6,8 @@ import { myHistory } from "./ListHome";
 import { ethers, BigNumber } from "ethers";
 import { iofyContractAddress, iofyContractAbi } from "../App";
 
+import "./RentHome.css"
+
 export const RentHome = () => {
   function createData(name, distance, price, review, status) {
     return { name, distance, price, review, status };
@@ -53,8 +55,8 @@ export const RentHome = () => {
     <Grid container style={{ display: "flex" }}>
       <Grid item lg={10} pl={4}>
         <Box display="flex" justifyContent="space-between">
-          <Typography>Devices near me</Typography>
-          <Typography>see all</Typography>
+          <span className="near-Rent-Page">Devices near me</span>
+          <span className="see-All-Near-Rent-Page">see all</span>
         </Box>
         <Box mt={2}>
           <Table
@@ -63,27 +65,32 @@ export const RentHome = () => {
           />
         </Box>
         <Box display="flex" justifyContent="space-between" mt={8}>
-          <Typography>History</Typography>
-          <Typography>see all</Typography>
+          <span className="near-Rent-Page">History</span>
+          <span className="see-All-Near-Rent-Page">see all</span>
         </Box>
         <Box mt={2}>
           {myHistory?.map((history) => (
+              <div>
             <Box
               display="flex"
               justifyContent="space-between"
-              alignItems="center"
               py={2}
-              borderBottom="1px solid rgba(0, 0, 0, 0.9)"
             >
-              <Box>
-                <Typography>{history?.day}</Typography>
-                <Typography>{history?.name}</Typography>
-                <Typography>{history?.status}</Typography>
+              <Box className="container-col-History-Rent-Home">
+                <span className="date-Rent-Page-History">{history?.day}</span>
+                <span className="name-Rent-Page-History">{history?.name}</span>
+                <span className="status-Rent-Page-History">{history?.status}</span>
               </Box>
               <Box>
                 <Typography>{history?.price}</Typography>
               </Box>
             </Box>
+                <svg width="100%" height="6" viewBox="0 0 757 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path opacity="0.2" d="M0.333333 3.125C0.333333 4.59776 1.52724 5.79167 3 5.79167C4.47276 5.79167 5.66667 4.59776 5.66667 3.125C5.66667 1.65224 4.47276 0.458333 3 0.458333C1.52724 0.458333 0.333333 1.65224 0.333333 3.125ZM751.333 3.12493C751.333 4.59769 752.527 5.7916 754 5.7916C755.473 5.7916 756.667 4.59769 756.667 3.12493C756.667 1.65217 755.473 0.458267 754 0.458268C752.527 0.458268 751.333 1.65218 751.333 3.12493ZM3 3.625L754 3.62493L754 2.62493L3 2.625L3 3.625Z" fill="black" fill-opacity="0.9"/>
+                </svg>
+
+              </div>
+
           ))}{" "}
         </Box>
       </Grid>

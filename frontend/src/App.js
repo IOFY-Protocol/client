@@ -14,7 +14,7 @@ import { publicProvider } from "wagmi/providers/public";
 import deployedIofyContract from "./artifacts/Iofy.sol/Iofy.json";
 import deployedMockTokenContract from "./artifacts/test/MockToken.sol/MockToken.json";
 
-export const iofyContractAddress = "0x954630ac0260B7BE506bD3D42517Ce7c21DDdb29";
+export const iofyContractAddress = "0xF94c74dbD81c8Bd4DB7AF4034e93BcA310ce2FCC";
 export const mockTokenContractAdress =
   "0x8AD10a05189cAC762Fc74b7b3F3eFFb1BEFb8FA9";
 export const iofyContractAbi = deployedIofyContract;

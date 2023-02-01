@@ -30,16 +30,16 @@ export default function DenseTable({ tableRow, rows }) {
                 component="th"
                 scope="row"
                 onClick={() =>
-                  navigate(`/rent/${row?.name}`, { state: { row } })
+                  navigate(`/rent/${row?.iotDeviceId}`, { state: { row } })
                 }
                 style={{ cursor: "pointer" }}
               >
-                {row.name}
+                {row?.iotDeviceId}
               </TableCell>
-              <TableCell align="left">{row.distance}</TableCell>
-              <TableCell align="left">{row.price}</TableCell>
-              <TableCell align="left">{row.review}</TableCell>
-              <TableCell align="left">{row.status}</TableCell>
+              <TableCell align="left">{row?.distance}</TableCell>
+              <TableCell align="left">{row?.costPerHour}</TableCell>
+              <TableCell align="left">{row?.review}</TableCell>
+              <TableCell align="left">{row?.isActive}</TableCell>
             </TableRow>
           ))}
         </TableBody>

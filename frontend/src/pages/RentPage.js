@@ -3,37 +3,41 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import { ReactComponent as ArrowIcon } from "../assets/Arrow.svg";
 import { ethers, BigNumber } from "ethers";
-import axios from 'axios';
-import { iofyContractAddress, mockTokenContractAdress, mockTokenContractAbi, iofyContractAbi } from "../App";
+import axios from "axios";
+import Mic from "../assets/Mic.png";
+import {
+  iofyContractAddress,
+  mockTokenContractAdress,
+  mockTokenContractAbi,
+  iofyContractAbi,
+} from "../App";
 
-import "./RentPage.css"
+import "./RentPage.css";
 const RentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [data, setData] = useState();
   const [userAddress, setUserAddress] = useState();
+  const [islocked, setIslocked] = useState("");
 
-  const { name, distance, price, review, status } = location?.state?.row;
+  const { name, distance, price, review, isActive, cid, owner } =
+    location?.state?.row;
   //zdpuB1RsEudVE45aHUNy84qsrEPGkCroFFrTmM1GThA8s9jFN/7549
   const getData = async () => {
-    const metaData = await axios.get("http://localhost:8000/orbitdb/zdpuB1RsEudVE45aHUNy84qsrEPGkCroFFrTmM1GThA8s9jFN/7549")
-    const data = metaData?.data && metaData?.data[0]
-    setData(data)
-  }
-  console.log("data", data)
+    const metaData = await axios.get("http://localhost:8000/orbitdb/" + cid);
+    const data = metaData?.data && metaData?.data[0];
+    setData(data);
+  };
+  console.log("data", data);
   useEffect(() => {
     getData();
+    //console.log("post response =", response);
   }, []);
-
+  console.log("locked", islocked)
   /**
- * rent an Iot device
- */
-  const rentIoTDevice = async (
-    iotDeviceId,
-    user,
-    amount,
-    startsIn
-  ) => {
+   * rent an Iot device
+   */
+  const rentIoTDevice = async (iotDeviceId, user, amount, startsIn) => {
     if (!iotDeviceId && Number(iotDeviceId)) {
       console.log(`Error, Please enter a valid iotDeviceId`);
       return;
@@ -68,26 +72,38 @@ const RentPage = () => {
          *  Receive Emitted Event from Smart Contract
          *  @dev See newAttributeAdded emitted from our smart contract add_new_attribute function
          */
-        contract.on("RentIot", async (receiver, user, iotDeviceId, id, costPerHour, fee, start, end) => {
-          console.log("Iot receiver address :", receiver.toString());
-          console.log("Iot owner address :", user.toString());
-          console.log("Iot iotDeviceId :", iotDeviceId.toNumber());
-          console.log("Iot costPerHour :", costPerHour.toNumber());
-          console.log("Iot start :", start.toNumber());
-          console.log("Iot end :", end.toNumber());
-          console.log("Iot start :", fee.toNumber());
-          const response = await axios.post('http://localhost:8000/unlockDevice');
-          console.log("post response =", response)
-        });
+        contract.on(
+          "RentIot",
+          async (
+            receiver,
+            user,
+            iotDeviceId,
+            id,
+            costPerHour,
+            fee,
+            start,
+            end
+          ) => {
+            console.log("Iot receiver address :", receiver.toString());
+            console.log("Iot owner address :", user.toString());
+            console.log("Iot iotDeviceId :", iotDeviceId.toNumber());
+            console.log("Iot costPerHour :", costPerHour.toNumber());
+            console.log("Iot start :", start.toNumber());
+            console.log("Iot end :", end.toNumber());
+            console.log("Iot start :", fee.toNumber());
+            const did = iotDeviceId.toString();
+            const response = await axios.post(
+              "http://localhost:8000/unlockDevice",
+              {did}
+            );
+            console.log("post response =", response);
+            setIslocked(response?.data?.result)
+          }
+        );
         let appr = await stableToken.approve(iofyContractAddress, amount);
         console.log("approve... please wait!");
         await appr.wait();
-        let tx = await contract.rentIoT(
-          iotDeviceId,
-          user,
-          amount,
-          startsIn
-        );
+        let tx = await contract.rentIoT(iotDeviceId, user, amount, startsIn);
         const stylesMining = ["color: black", "background: yellow"].join(";");
         console.log(
           "%c Create new iot device... please wait!  %s",
@@ -154,50 +170,68 @@ const RentPage = () => {
       <Box mt={2}>
         <Box display="flex" justifyContent="center">
           <img
-              className="image-Rent-Page"
-            src={
-              "https://www.mickeynews.com/wp-content/uploads/2016/08/Goofystar_1600-1280x640.jpg"
-            }
+            className="image-Rent-Page"
+            src={Mic}
             width={1000}
             height={400}
             style={{ borderRadius: "10px" }}
           />
         </Box>
-        <Box
-          display="flex"
-          mt={4}
-          flexDirection="column"
-          gap="20px"
-        >
+        <Box display="flex" mt={4} flexDirection="column" gap="20px">
           <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Name </label>
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              Name{" "}
+            </label>
 
-            <span className="text-value-Device-Page">{data?.DeviceName || name}</span>
+            <span className="text-value-Device-Page">
+              {data?.DeviceName || name}
+            </span>
           </div>
           <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Owner </label>
-            <span className="text-value-Device-Page">{name}</span>
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              Owner{" "}
+            </label>
+            <span className="text-value-Device-Page">{owner}</span>
           </div>
           <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Status </label>
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              Status{" "}
+            </label>
 
-            <span className="text-value-Device-Page">{status}</span>
+            <span className="text-value-Device-Page">
+              {isActive ? "Available" : "Not Available"}
+            </span>
           </div>
           <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Rating </label>
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              Rating{" "}
+            </label>
 
             <span className="text-value-Device-Page">{review}</span>
           </div>
           <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Fee </label>
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              Rental Fee{" "}
+            </label>
 
-            <span className="text-value-Device-Page">{data?.RentalFee || price}</span>
+            <span className="text-value-Device-Page">
+              {data?.RentalFee || price}
+            </span>
           </div>
 
           <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>Description </label>
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              Description{" "}
+            </label>
 
             <span className="text-value-Device-Page">{data?.Description}</span>
+          </div>
+          <div className="container-line-Rent-Page">
+            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+              unlocked{" "}
+            </label>
+
+            <span className="text-value-Device-Page">{islocked}</span>
           </div>
         </Box>
       </Box>
@@ -211,7 +245,15 @@ const RentPage = () => {
             marginLeft: "10px",
             padding: "10px 25px",
           }}
-          onClick={() => rentIoTDevice(Number(data._id), userAddress, Number(data.RentalFee), 0)} >
+          onClick={() =>
+            rentIoTDevice(
+              Number(data._id),
+              userAddress,
+              Number(data.RentalFee),
+              0
+            )
+          }
+        >
           Rent
         </Button>
       </Box>

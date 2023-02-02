@@ -21,11 +21,12 @@ const RentPage = () => {
   const [open, setOpen] = React.useState(false);
   const [data, setData] = useState();
   const [userAddress, setUserAddress] = useState();
-  const [islocked, setIslocked] = useState("");
+  const [islocked, setIslocked] = useState(undefined);
   const [isLoading, setIsloading] = useState(false);
+  const [rentalTime, setRentalTime] = useState("");
 
   const { name, distance, price, review, isActive, cid, owner } =
-    location?.state?.row;
+    location?.state?.row || {};
   //zdpuB1RsEudVE45aHUNy84qsrEPGkCroFFrTmM1GThA8s9jFN/7549
   const getData = async () => {
     const metaData = await axios.get("http://localhost:8000/orbitdb/" + cid);
@@ -60,6 +61,7 @@ const RentPage = () => {
     try {
       const { ethereum } = window;
       if (ethereum) {
+        setIsloading(true);
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
@@ -72,7 +74,6 @@ const RentPage = () => {
           mockTokenContractAbi.abi,
           signer
         );
-        setIsloading(true);
 
         /**
          *  Receive Emitted Event from Smart Contract
@@ -93,26 +94,27 @@ const RentPage = () => {
             console.log("Iot receiver address :", receiver.toString());
             console.log("Iot owner address :", user.toString());
             console.log("Iot iotDeviceId :", iotDeviceId.toNumber());
-            console.log("Iot costPerHour :", costPerHour.toNumber());
-            console.log("Iot start :", start.toNumber());
+            console.log("Iot costPerHour :"/*, utils.bigNumberify(costPerHour.toNumber())*/);
+            /*console.log("Iot start :", start.toNumber());
             console.log("Iot end :", end.toNumber());
-            console.log("Iot start :", fee.toNumber());
+            console.log("Iot fee :", fee.toNumber());*/
             const did = iotDeviceId.toString();
             const response = await axios.post(
               "http://localhost:8000/unlockDevice",
-              { did }
+              { did, timeout: (Number(rentalTime)*1000).toString() }
             );
             console.log("post response =", response);
             setIslocked(response?.data?.result);
           }
         );
-        let appr = await stableToken.approve(iofyContractAddress, amount);
+        let usdtAmount = ethers.utils.parseEther(amount.toString());
+        let appr = await stableToken.approve(iofyContractAddress, usdtAmount);
         console.log("approve... please wait!");
         await appr.wait();
-        let tx = await contract.rentIoT(iotDeviceId, user, amount, startsIn);
+        let tx = await contract.rentIoT(iotDeviceId, user, usdtAmount, startsIn);
         const stylesMining = ["color: black", "background: yellow"].join(";");
         console.log(
-          "%c Create new iot device... please wait!  %s",
+          "%c rent iot device... please wait!  %s",
           stylesMining,
           tx.hash
         );
@@ -121,7 +123,7 @@ const RentPage = () => {
         const receipt = await tx.wait();
         const stylesReceipt = ["color: black", "background: #e9429b"].join(";");
         console.log(
-          "%c🍵 We just added new iot device %s ",
+          "%c We just added new iot device %s ",
           stylesReceipt,
           tx.hash
         );
@@ -138,7 +140,7 @@ const RentPage = () => {
             ";"
           );
           console.log(
-            `%c🧬 new iot device added, see transaction %s`,
+            `%c new iot device added, see transaction %s`,
             stylesPolygon,
             tx.hash
           );
@@ -193,7 +195,7 @@ const RentPage = () => {
             </label>
 
             <span className="text-value-Device-Page">
-              {data?.DeviceName || name}
+              {data?.DeviceName || name || ""}
             </span>
           </div>
           <div className="container-line-Rent-Page">
@@ -235,13 +237,15 @@ const RentPage = () => {
 
             <span className="text-value-Device-Page">{data?.Description}</span>
           </div>
-          <div className="container-line-Rent-Page">
-            <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
-              unlocked{" "}
-            </label>
+          {islocked && (
+            <div className="container-line-Rent-Page">
+              <label className="text-Rent-Page" style={{ marginRight: "20px" }}>
+                unlocked{" "}
+              </label>
 
-            <span className="text-value-Device-Page">{islocked}</span>
-          </div>
+              <span className="text-value-Device-Page">{islocked}</span>
+            </div>
+          )}
         </Box>
       </Box>
       <Box display="flex" justifyContent="center" mt={8}>
@@ -263,18 +267,16 @@ const RentPage = () => {
         <Box p={8}>
           <Box>
             <label className="text-label-Page" style={{ marginBottom: "10px" }}>
-              specify your time{" "}
+              specify your time (per Hour)
             </label>
             <input
               placeholder="specify your time "
               className="input-rent-Devices"
               type="text"
-              // onChange={(e) =>
-              //   setMetadata({ ...metadata, category: e.target.value })
-              // }
+              onChange={(e) => setRentalTime(e.target.value)}
             />
             <label className="text-label-Page" style={{ marginTop: "10px" }}>
-              coast estimation :{" "}
+              coast estimation :{Number(data?.RentalFee) * Number(rentalTime)} $ USDT
             </label>
           </Box>
           <Box display="flex" justifyContent="center" mt={8}>
@@ -292,7 +294,7 @@ const RentPage = () => {
                 rentIoTDevice(
                   Number(data._id),
                   userAddress,
-                  Number(data.RentalFee),
+                  Number(data?.RentalFee) * Number(rentalTime),
                   0
                 )
               }

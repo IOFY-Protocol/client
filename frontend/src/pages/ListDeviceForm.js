@@ -37,6 +37,7 @@ const ListDeviceForm = () => {
     const cid = root + "/" + path;
     console.log("cid", cid);
     await addIotDevice(cid, Number(id), Number(objMeta.rentalFee));
+    setIsloading(false);
   };
 
   //console.log("meta =", metadata)
@@ -122,7 +123,6 @@ const ListDeviceForm = () => {
           stylesReceipt,
           tx.hash
         );
-        setIsloading(false);
 
         /* Check our Transaction results */
         if (receipt.status === 1) {

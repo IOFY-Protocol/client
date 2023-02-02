@@ -12,11 +12,13 @@ import {
   iofyContractAbi,
 } from "../App";
 import { CircularProgress } from "@mui/material";
-
 import "./RentPage.css";
+import BasicModal from "../components/Modal/Modal";
+
 const RentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
   const [data, setData] = useState();
   const [userAddress, setUserAddress] = useState();
   const [islocked, setIslocked] = useState("");
@@ -124,6 +126,7 @@ const RentPage = () => {
           tx.hash
         );
         setIsloading(false);
+        setOpen(false);
 
         /* Check our Transaction results */
         if (receipt.status === 1) {
@@ -251,18 +254,54 @@ const RentPage = () => {
             marginLeft: "10px",
             padding: "10px 25px",
           }}
-          onClick={() =>
-            rentIoTDevice(
-              Number(data._id),
-              userAddress,
-              Number(data.RentalFee),
-              0
-            )
-          }
+          onClick={() => setOpen(true)}
         >
-          {isLoading ? <CircularProgress /> : "Rent"}
+          Rent
         </Button>
       </Box>
+      <BasicModal open={open} handleClose={() => setOpen(false)}>
+        <Box p={8}>
+          <Box>
+            <label className="text-label-Page" style={{ marginBottom: "10px" }}>
+              specify your time{" "}
+            </label>
+            <input
+              placeholder="specify your time "
+              className="input-rent-Devices"
+              type="text"
+              // onChange={(e) =>
+              //   setMetadata({ ...metadata, category: e.target.value })
+              // }
+            />
+            <label className="text-label-Page" style={{ marginTop: "10px" }}>
+              coast estimation :{" "}
+            </label>
+          </Box>
+          <Box display="flex" justifyContent="center" mt={8}>
+            <Button
+              style={{
+                border: "1px solid #2A1053",
+                borderRadius: "10px",
+                color: "white",
+                backgroundColor: "#2A1053",
+                marginLeft: "10px",
+                padding: "10px 25px",
+                width: "200px",
+              }}
+              onClick={() =>
+                rentIoTDevice(
+                  Number(data._id),
+                  userAddress,
+                  Number(data.RentalFee),
+                  0
+                )
+              }
+            >
+              {isLoading ? <CircularProgress /> : "Confirm"}
+            </Button>
+          </Box>
+        </Box>
+      </BasicModal>
     </Box>
   );
 };

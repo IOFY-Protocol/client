@@ -11,6 +11,7 @@ import {
   mockTokenContractAbi,
   iofyContractAbi,
 } from "../App";
+import { CircularProgress } from "@mui/material";
 
 import "./RentPage.css";
 const RentPage = () => {
@@ -19,6 +20,7 @@ const RentPage = () => {
   const [data, setData] = useState();
   const [userAddress, setUserAddress] = useState();
   const [islocked, setIslocked] = useState("");
+  const [isLoading, setIsloading] = useState(false);
 
   const { name, distance, price, review, isActive, cid, owner } =
     location?.state?.row;
@@ -33,7 +35,7 @@ const RentPage = () => {
     getData();
     //console.log("post response =", response);
   }, []);
-  console.log("locked", islocked)
+  console.log("locked", islocked);
   /**
    * rent an Iot device
    */
@@ -68,6 +70,8 @@ const RentPage = () => {
           mockTokenContractAbi.abi,
           signer
         );
+        setIsloading(true);
+
         /**
          *  Receive Emitted Event from Smart Contract
          *  @dev See newAttributeAdded emitted from our smart contract add_new_attribute function
@@ -94,10 +98,10 @@ const RentPage = () => {
             const did = iotDeviceId.toString();
             const response = await axios.post(
               "http://localhost:8000/unlockDevice",
-              {did}
+              { did }
             );
             console.log("post response =", response);
-            setIslocked(response?.data?.result)
+            setIslocked(response?.data?.result);
           }
         );
         let appr = await stableToken.approve(iofyContractAddress, amount);
@@ -119,6 +123,8 @@ const RentPage = () => {
           stylesReceipt,
           tx.hash
         );
+        setIsloading(false);
+
         /* Check our Transaction results */
         if (receipt.status === 1) {
           /**
@@ -254,7 +260,7 @@ const RentPage = () => {
             )
           }
         >
-          Rent
+          {isLoading ? <CircularProgress /> : "Rent"}
         </Button>
       </Box>
     </Box>

@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { BigNumber, ethers } from "ethers";
+import { iofyContractAbi, iofyContractAddress } from "../App";
+
+
 
 export const myHistory = [
   {
@@ -22,7 +26,8 @@ export const myHistory = [
     price: "100$",
   },
 ];
-const listHome = () => {
+const ListHome = () => {
+  const [isLoading, setIsloading] = useState(false);
   const myDevices = [
     {
       name: "jabeur electirc scooter",
@@ -65,6 +70,86 @@ const listHome = () => {
       description: "description here ",
     },
   ];
+
+   /**
+   *  withdraw owner funds
+   */
+   const withdraw = async (recipient, amount) => {
+
+    if (!amount && Number(amount)) {
+      console.log(`Error, Please enter a valid amount`);
+      return;
+    }
+
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        setIsloading(true);
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+          iofyContractAddress,
+          iofyContractAbi.abi,
+          signer
+        );
+
+        /**
+         *  Receive Emitted Event from Smart Contract
+         *  @dev See newAttributeAdded emitted from our smart contract add_new_attribute function
+         */
+        contract.on(
+          "Withdraw",
+          async (
+            ownerAdr,
+            recipient,
+            amountEvent
+          ) => {
+            console.log("Iot owner address :", ownerAdr.toString());
+            console.log("recipient address :", recipient.toString());
+            console.log("amount :", amountEvent.toString());
+          }
+        );
+        let usdtAmount = ethers.utils.parseEther(amount.toString());
+        let tx = await contract.withdraw(recipient, usdtAmount);
+        const stylesMining = ["color: black", "background: yellow"].join(";");
+        console.log(
+          "%c withdraw device... please wait!  %s",
+          stylesMining,
+          tx.hash
+        );
+        //wait until a block containing our transaction has been mined and confirmed.
+        const receipt = await tx.wait();
+        const stylesReceipt = ["color: black", "background: #e9429b"].join(";");
+        console.log(
+          "%c successful withdraw %s ",
+          stylesReceipt,
+          tx.hash
+        );
+        setIsloading(false);
+
+        /* Check our Transaction results */
+        if (receipt.status === 1) {
+          /**
+           * @dev NOTE: Switch up these links once we go to Production
+           * Currently set to use Polygon Mumbai Testnet
+           */
+          const stylesPolygon = ["color: white", "background: #7e44df"].join(
+            ";"
+          );
+          console.log(
+            `%c successful withdraw, see transaction %s`,
+            stylesPolygon,
+            tx.hash
+          );
+        }
+        return;
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <Grid container style={{ display: "flex" }}>
@@ -134,4 +219,4 @@ const listHome = () => {
   );
 };
 
-export default listHome;
+export default ListHome;

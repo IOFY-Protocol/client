@@ -1,4 +1,4 @@
-.title-Rent-Page{
+.title-Rent-Page {
     width: 100%;
     height: 30px;
     font-family: 'Poppins', sans-serif;
@@ -9,18 +9,21 @@
     text-align: center;
     color: #000000;
 }
-.image-Rent-Page{
+
+.image-Rent-Page {
     width: 80%;
     height: 40%;
     border-radius: 10px;
 }
-.container-line-Rent-Page{
+
+.container-line-Rent-Page {
     width: 100%;
     display: flex;
     align-items: center
 }
-.text-Rent-Page{
-    width:30%;
+
+.text-Rent-Page {
+    width: 30%;
     display: flex;
     justify-content: end;
     height: 23px;
@@ -33,12 +36,13 @@
     color: #000000;
     opacity: 0.5;
 }
-.text-value-Rent-Page{
-    width:60%;
+
+.text-value-Rent-Page {
+    width: 60%;
     display: flex;
     justify-content: start;
     height: 18px;
-    font-family: 'Inter', sans-serif ;
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -72,7 +76,7 @@
     width: 50%
 }
 
-.text-label-Page{
+.text-label-Page {
     /* width:30%; */
     display: flex;
     justify-content: start;

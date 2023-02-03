@@ -29,8 +29,8 @@ const Layout = ({children}) => {
                 </div>
             </Box>
             <Box mt={5}>{children}</Box>
-    </Box>
-  );
+        </Box>
+    );
 };
 
 export default Layout;

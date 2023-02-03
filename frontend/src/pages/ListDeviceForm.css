@@ -12,6 +12,7 @@
     border: 1px solid #FFFFFF !important;
     border-radius: 10px !important;
 }
+
 .text-List-Device {
     font-family: 'Inter', sans-serif !important;
     font-style: normal !important;
@@ -22,6 +23,7 @@
     letter-spacing: -0.165px !important;
     color: #FFFFFF !important;
 }
+
 .title-List-Device {
     font-family: 'Poppins', sans-serif !important;
     font-style: normal !important;
@@ -32,10 +34,12 @@
     letter-spacing: -0.165px !important;
     color: #000000 !important;
 }
+
 .input-List-Device-container {
     display: flex;
     align-items: baseline;
 }
+
 .input-List-Devices {
     box-sizing: border-box !important;
     display: flex !important;
@@ -60,6 +64,7 @@
     margin-left: 5% !important;
     width: 50%
 }
+
 .label-input-List-Device {
     justify-self: end;
     font-family: 'Poppins', sans-serif;
@@ -70,15 +75,18 @@
     text-align: center;
     color: #000000;
 }
+
 .label-input-List-Device-container {
     width: 20%;
     display: flex;
     justify-content: end;
 }
+
 .MuiBox-root css-1nwu0td {
     display: flex;
     justify-content: center;
 }
+
 .image-input-List-Devices {
     box-sizing: border-box !important;
     display: flex !important;
@@ -104,9 +112,11 @@
     text-align: center !important;
     margin-left: 5% !important;
 }
+
 .file-input-List-Devices {
     display: none;
 }
+
 label {
     cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import React from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ReactComponent as ArrowIcon} from "../assets/Arrow.svg";
@@ -8,16 +8,16 @@ import './DevicePage.css';
 export const DevicePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {name, price, rentalTime, status, description} =
+    const {id, price, rentalTime, status, totalRaised} =
     location?.state?.device || {};
     const [editable, setEditable] = React.useState(false);
     return (
         <Box>
             <Box onClick={() => navigate("/list")} p={4}>
-                <ArrowIcon style={{ cursor: "pointer" }} />
+                <ArrowIcon style={{cursor: "pointer"}}/>
             </Box>
             <Box display="flex" justifyContent="center">
-                <span className="title-Device-Page">{name}</span>
+                <span className="title-Device-Page">{id}</span>
             </Box>
             <Box mt={2}>
                 <Box display="flex" justifyContent="center">
@@ -37,31 +37,31 @@ export const DevicePage = () => {
                     gap="20px"
                 >
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>ammount gernerated </label>
-                        <span className="text-value-Device-Page">300$</span>
+                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Total Raised </label>
+                        <span className="text-value-Device-Page">{parseInt(totalRaised, 10) / 10 ** 18} $</span>
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Rental Times </label>
+                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Rental Times </label>
                         <span className="text-value-Device-Page">{rentalTime}</span>
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Name </label>
+                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Name </label>
                         {editable ? (
-                            <input className="input-value-Device-Page" defaultValue={name} />
+                            <input className="input-value-Device-Page" defaultValue={id}/>
                         ) : (
-                            <span className="text-value-Device-Page">{name}</span>
+                            <span className="text-value-Device-Page">{id}</span>
                         )}
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Fee </label>
+                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Fee </label>
                         {editable ? (
-                            <input type="text" className="input-value-Device-Page" defaultValue={price} />
+                            <input type="text" className="input-value-Device-Page" defaultValue={price}/>
                         ) : (
-                            <span className="text-value-Device-Page">{price}</span>
+                            <span className="text-value-Device-Page">{price} $</span>
                         )}
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Status </label>
+                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Status </label>
                         {editable ? (
                             <Input
                                 type="select"
@@ -71,18 +71,6 @@ export const DevicePage = () => {
                             />
                         ) : (
                             <span className="text-value-Device-Page">{status}</span>
-                        )}
-                    </div>
-                    <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Description </label>
-                        {editable ? (
-                            <textarea
-                                className="input-value-Device-Page"
-                                defaultValue={description}
-                                rows={4}
-                            />
-                        ) : (
-                            <span className="text-value-Device-Page">{description}</span>
                         )}
                     </div>
                 </Box>

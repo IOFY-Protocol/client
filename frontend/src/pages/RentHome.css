@@ -26,7 +26,7 @@
 
 .date-Rent-Page-History {
     height: 15px;
-    font-family: "Inter", sans-serif ;
+    font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -39,7 +39,7 @@
 
 .name-Rent-Page-History {
     height: 19px;
-    font-family: "Inter", sans-serif ;
+    font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -50,7 +50,7 @@
 
 .status-Rent-Page-History {
     height: 15px;
-    font-family: "Inter", sans-serif ;
+    font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -59,7 +59,8 @@
     color: #840404;
     opacity: 0.7;
 }
-.container-col-History-Rent-Home{
+
+.container-col-History-Rent-Home {
     display: flex;
     flex-direction: column;
     gap: 5px;

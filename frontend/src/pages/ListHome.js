@@ -1,8 +1,8 @@
-import {Box, Button, Grid, Typography} from "@mui/material";
-import {BigNumber, ethers} from "ethers";
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {iofyContractAbi, iofyContractAddress} from "../App";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { BigNumber, ethers } from "ethers";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { iofyContractAbi, iofyContractAddress } from "../App";
 
 
 export let myHistory = [
@@ -26,49 +26,7 @@ export let myHistory = [
     },
 ];
 const ListHome = () => {
-    const myDevices = [
-        {
-            name: "jabeur electirc scooter",
-            id: "1",
-            price: "21$",
-            rentalTime: 1,
-            status: "Available",
-            description: "description here ",
-        },
-        {
-            name: "jabeur electirc scooter",
-            id: "2",
-            price: "21$",
-            rentalTime: 1,
-            status: "Available",
-            description: "description here ",
-        },
-        {
-            name: "jabeur electirc scooter",
-            id: "3",
-            price: "21$",
-            rentalTime: 1,
-            status: "Available",
-            description: "description here ",
-        },
-        {
-            name: "jabeur electirc scooter",
-            id: "4",
-            price: "21$",
-            rentalTime: 1,
-            status: "Available",
-            description: "description here ",
-        },
-        {
-            name: "jabeur electirc scooter",
-            id: "5",
-            price: "21$",
-            rentalTime: 1,
-            status: "Available",
-            description: "description here ",
-        },
-    ];
-    const [iotDevice, setIotDevice] = useState({data: {}, iotDevices: []});
+    const [iotDevice, setIotDevice] = useState({ data: {}, iotDevices: [] });
     console.log('iotDevice', iotDevice);
     useEffect(() => {
         getIotDevices();
@@ -88,14 +46,12 @@ const ListHome = () => {
                 status: iotDevice?.isActive ? "Available" : "Under Maintenance",
             });
         }
-        setIotDevice({data, iotDevices});
+        setIotDevice({ data, iotDevices });
 
     };
     const getContract = async () => {
-        const {ethereum} = window;
+        const { ethereum } = window;
         const provider = new ethers.providers.Web3Provider(ethereum, "any");
-        const signer = provider.getSigner();
-        const ownerAddr = await signer.getAddress();
         return new ethers.Contract(
             iofyContractAddress,
             iofyContractAbi.abi,
@@ -104,7 +60,7 @@ const ListHome = () => {
     };
     const getIoTOwnerInfo = async () => {
         try {
-            const {ethereum} = window;
+            const { ethereum } = window;
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum, "any");
                 const signer = provider.getSigner();
@@ -114,7 +70,7 @@ const ListHome = () => {
                     iofyContractAbi.abi,
                     provider
                 );
-                const data = await contract.getIoTOwnerInfo("0xbba228321C6f6665E7A768277f4E1CeA2F581BA6");
+                const data = await contract.getIoTOwnerInfo(ownerAddr);
                 //TODO replace with ownerAddr
                 return data;
             } else {
@@ -125,7 +81,7 @@ const ListHome = () => {
         }
     };
     return (
-        <Grid container style={{display: "flex"}}>
+        <Grid container style={{ display: "flex" }}>
             <Grid item lg={8} pl={12}>
                 <Box display="flex" justifyContent="space-between">
                     <Typography>My devices</Typography>
@@ -140,7 +96,7 @@ const ListHome = () => {
                             borderBottom="1px solid rgba(0, 0, 0, 0.9)"
                         >
                             <Typography py={1}>{device?.id}</Typography>
-                            <Link to={`/list/${device?.id}`} state={{device}}>
+                            <Link to={`/list/${device?.id}`} state={{ device }}>
                                 <Typography>edit</Typography>
                             </Link>
                         </Box>

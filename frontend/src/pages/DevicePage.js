@@ -1,33 +1,31 @@
-import {Box, Button} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {ReactComponent as ArrowIcon} from "../assets/Arrow.svg";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as ArrowIcon } from "../assets/Arrow.svg";
 import Input from "../components/ui";
 import './DevicePage.css';
-
+import logo from '../assets/Mic.png'
 export const DevicePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {id, price, rentalTime, status, totalRaised} =
-    location?.state?.device || {};
+    const { id, price, rentalTime, status, totalRaised } =
+        location?.state?.device || {};
     const [editable, setEditable] = React.useState(false);
     return (
         <Box>
             <Box onClick={() => navigate("/list")} p={4}>
-                <ArrowIcon style={{cursor: "pointer"}}/>
+                <ArrowIcon style={{ cursor: "pointer" }} />
             </Box>
             <Box display="flex" justifyContent="center">
                 <span className="title-Device-Page">{id}</span>
             </Box>
             <Box mt={2}>
                 <Box display="flex" justifyContent="center">
-                    <img className="image-Device-Page"
-                         src={
-                             "https://www.mickeynews.com/wp-content/uploads/2016/08/Goofystar_1600-1280x640.jpg"
-                         }
-                         width={1000}
-                         height={400}
-                         style={{borderRadius: "10px"}}
+                    <img alt="nothing" className="image-Device-Page"
+                        src={logo}
+                        width={1000}
+                        height={400}
+                        style={{ borderRadius: "10px" }}
                     />
                 </Box>
                 <Box
@@ -37,31 +35,31 @@ export const DevicePage = () => {
                     gap="20px"
                 >
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Total Raised </label>
+                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Total Raised </label>
                         <span className="text-value-Device-Page">{parseInt(totalRaised, 10) / 10 ** 18} $</span>
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Rental Times </label>
+                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Rental Times </label>
                         <span className="text-value-Device-Page">{rentalTime}</span>
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Name </label>
+                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Name </label>
                         {editable ? (
-                            <input className="input-value-Device-Page" defaultValue={id}/>
+                            <input className="input-value-Device-Page" defaultValue={id} />
                         ) : (
                             <span className="text-value-Device-Page">{id}</span>
                         )}
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Fee </label>
+                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Fee </label>
                         {editable ? (
-                            <input type="text" className="input-value-Device-Page" defaultValue={price}/>
+                            <input type="text" className="input-value-Device-Page" defaultValue={price} />
                         ) : (
                             <span className="text-value-Device-Page">{price} $</span>
                         )}
                     </div>
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{marginRight: "20px"}}>Status </label>
+                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Status </label>
                         {editable ? (
                             <Input
                                 type="select"

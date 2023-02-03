@@ -3,7 +3,7 @@ import {ConnectButton} from "@rainbow-me/rainbowkit";
 import React from "react";
 import {NavLink} from "react-router-dom";
 import "./layout.css";
-
+import logo from '../../assets/IOFYlogo.png'
 const Layout = ({children}) => {
     return (
         <Box mx={8}>
@@ -13,7 +13,8 @@ const Layout = ({children}) => {
                 alignItems="center"
                 height="50px"
             >
-                <p className="project-title">IOFY</p>
+                <img style={{width:'100px'}} src={logo}></img>
+                
                 <Box display="flex" alignItems="center">
                     <NavLink className="link-layout" to={"/rent"}>
             <span style={{marginRight: "20px"}}>

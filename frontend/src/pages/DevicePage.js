@@ -1,15 +1,15 @@
-import {Box, Button, Typography} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {ReactComponent as ArrowIcon} from "../assets/Arrow.svg";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as ArrowIcon } from "../assets/Arrow.svg";
 import Input from "../components/ui";
 import './DevicePage.css';
-
+import logo from '../assets/Mic.png'
 export const DevicePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {name, price, rentalTime, status, description} =
-    location?.state?.device || {};
+    const { id, price, rentalTime, status, totalRaised } =
+        location?.state?.device || {};
     const [editable, setEditable] = React.useState(false);
     return (
         <Box>
@@ -17,17 +17,15 @@ export const DevicePage = () => {
                 <ArrowIcon style={{ cursor: "pointer" }} />
             </Box>
             <Box display="flex" justifyContent="center">
-                <span className="title-Device-Page">{name}</span>
+                <span className="title-Device-Page">{id}</span>
             </Box>
             <Box mt={2}>
                 <Box display="flex" justifyContent="center">
-                    <img className="image-Device-Page"
-                         src={
-                             "https://www.mickeynews.com/wp-content/uploads/2016/08/Goofystar_1600-1280x640.jpg"
-                         }
-                         width={1000}
-                         height={400}
-                         style={{borderRadius: "10px"}}
+                    <img alt="nothing" className="image-Device-Page"
+                        src={logo}
+                        width={1000}
+                        height={400}
+                        style={{ borderRadius: "10px" }}
                     />
                 </Box>
                 <Box
@@ -37,8 +35,8 @@ export const DevicePage = () => {
                     gap="20px"
                 >
                     <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>ammount gernerated </label>
-                        <span className="text-value-Device-Page">300$</span>
+                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Total Raised </label>
+                        <span className="text-value-Device-Page">{parseInt(totalRaised, 10) / 10 ** 18} $</span>
                     </div>
                     <div className="container-line-Device-Page">
                         <label className="text-Device-Page" style={{ marginRight: "20px" }}>Rental Times </label>
@@ -47,9 +45,9 @@ export const DevicePage = () => {
                     <div className="container-line-Device-Page">
                         <label className="text-Device-Page" style={{ marginRight: "20px" }}>Name </label>
                         {editable ? (
-                            <input className="input-value-Device-Page" defaultValue={name} />
+                            <input className="input-value-Device-Page" defaultValue={id} />
                         ) : (
-                            <span className="text-value-Device-Page">{name}</span>
+                            <span className="text-value-Device-Page">{id}</span>
                         )}
                     </div>
                     <div className="container-line-Device-Page">
@@ -57,7 +55,7 @@ export const DevicePage = () => {
                         {editable ? (
                             <input type="text" className="input-value-Device-Page" defaultValue={price} />
                         ) : (
-                            <span className="text-value-Device-Page">{price}</span>
+                            <span className="text-value-Device-Page">{price} $</span>
                         )}
                     </div>
                     <div className="container-line-Device-Page">
@@ -71,18 +69,6 @@ export const DevicePage = () => {
                             />
                         ) : (
                             <span className="text-value-Device-Page">{status}</span>
-                        )}
-                    </div>
-                    <div className="container-line-Device-Page">
-                        <label className="text-Device-Page" style={{ marginRight: "20px" }}>Description </label>
-                        {editable ? (
-                            <textarea
-                                className="input-value-Device-Page"
-                                defaultValue={description}
-                                rows={4}
-                            />
-                        ) : (
-                            <span className="text-value-Device-Page">{description}</span>
                         )}
                     </div>
                 </Box>

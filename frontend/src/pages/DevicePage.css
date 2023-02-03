@@ -1,4 +1,4 @@
-.title-Device-Page{
+.title-Device-Page {
     width: 100%;
     height: 30px;
     font-family: 'Poppins', sans-serif;
@@ -9,18 +9,21 @@
     text-align: center;
     color: #000000;
 }
-.image-Device-Page{
+
+.image-Device-Page {
     width: 80%;
     height: 40%;
     border-radius: 10px;
 }
-.container-line-Device-Page{
+
+.container-line-Device-Page {
     width: 100%;
     display: flex;
     align-items: center
 }
-.text-Device-Page{
-    width:30%;
+
+.text-Device-Page {
+    width: 30%;
     display: flex;
     justify-content: end;
     height: 23px;
@@ -33,12 +36,13 @@
     color: #000000;
     opacity: 0.5;
 }
-.text-value-Device-Page{
-    width:60%;
+
+.text-value-Device-Page {
+    width: 60%;
     display: flex;
     justify-content: start;
     height: 18px;
-    font-family: 'Inter', sans-serif ;
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -46,11 +50,12 @@
     text-align: center;
     color: #000000;
 }
-.input-value-Device-Page{
-    width:55%;
+
+.input-value-Device-Page {
+    width: 55%;
     display: flex;
     justify-content: start;
-    font-family: 'Inter', sans-serif ;
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -66,9 +71,11 @@
     border: 2px solid #D9D9D9;
     border-radius: 10px;
 }
-.MuiBackdrop-root .MuiBackdrop-invisible .MuiModal-backdrop .css-g3hgs1-MuiBackdrop-root-MuiModal-backdrop{
+
+.MuiBackdrop-root .MuiBackdrop-invisible .MuiModal-backdrop .css-g3hgs1-MuiBackdrop-root-MuiModal-backdrop {
 
 }
-#demo-simple-select{
-    width: 60%!important;
+
+#demo-simple-select {
+    width: 60% !important;
 }

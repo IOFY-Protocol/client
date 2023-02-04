@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Typography, Grid } from "@mui/material";
+import { Box, Button, Typography, Grid, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BigNumber, ethers } from "ethers";
 import { iofyContractAbi, iofyContractAddress } from "../App";
@@ -30,9 +30,15 @@ const ListHome = () => {
   const [userAddress, setUserAddress] = useState("");
   const [iotDevice, setIotDevice] = useState({ data: {}, iotDevices: [] });
   console.log("iotDevice", iotDevice);
-  const amount = (
-    iotDevice?.data?.totalRaised?._hex - iotDevice?.data?.totalWithdrawal?._hex
-  ).toString();
+  const amount =
+    parseInt(
+      (
+        iotDevice?.data?.totalRaised?._hex -
+        iotDevice?.data?.totalWithdrawal?._hex
+      ).toString(),
+      10
+    ) /
+    10 ** 18;
   useEffect(() => {
     getIotDevices();
   }, []);
@@ -243,7 +249,7 @@ const ListHome = () => {
               marginBottom: "30px",
             }}
           >
-            Available Funds in USD{" "}
+            Generated Funds from all IOT devices in USDT{" "}
           </Typography>
           <Typography
             style={{
@@ -254,17 +260,6 @@ const ListHome = () => {
             }}
           >
             {amount} USDT
-          </Typography>
-          <Typography
-            style={{
-              fontWeight: 400,
-              fontSize: "15px",
-              color: "rgba(0, 0, 0, 0.9)",
-              opacity: 0.7,
-              marginBottom: "30px",
-            }}
-          >
-            {userAddress}
           </Typography>
           <Button
             style={{
@@ -278,7 +273,7 @@ const ListHome = () => {
             }}
             onClick={() => withdraw(userAddress, amount)}
           >
-            Withdraw
+            {isLoading ? <CircularProgress /> : "Withdraw"}
           </Button>
         </Box>
       </Grid>
